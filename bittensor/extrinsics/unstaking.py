@@ -30,6 +30,7 @@ def __do_remove_stake_single(
     amount: "bittensor.Balance",
     wait_for_inclusion: bool = True,
     wait_for_finalization: bool = False,
+    netuid: int = 0,
 ) -> bool:
     r"""
     Executes an unstake call to the chain using the wallet and the amount specified.
@@ -72,6 +73,7 @@ def __do_remove_stake_single(
         amount=amount,
         wait_for_inclusion=wait_for_inclusion,
         wait_for_finalization=wait_for_finalization,
+        netuid=netuid,
     )
 
     return success
@@ -111,6 +113,7 @@ def unstake_extrinsic(
     wait_for_inclusion: bool = True,
     wait_for_finalization: bool = False,
     prompt: bool = False,
+    netuid: int = 0,
 ) -> bool:
     r"""Removes stake into the wallet coldkey from the specified hotkey ``uid``.
 
@@ -206,6 +209,7 @@ def unstake_extrinsic(
                 amount=unstaking_balance,
                 wait_for_inclusion=wait_for_inclusion,
                 wait_for_finalization=wait_for_finalization,
+                netuid=netuid,
             )
 
         if staking_response is True:  # If we successfully unstaked.

@@ -2236,6 +2236,7 @@ class Subtensor:
         wait_for_inclusion: bool = True,
         wait_for_finalization: bool = False,
         prompt: bool = False,
+        netuid: int = 0,
     ) -> bool:
         """
         Removes a specified amount of stake from a single hotkey account. This function is critical for adjusting
@@ -2263,6 +2264,7 @@ class Subtensor:
             wait_for_inclusion,
             wait_for_finalization,
             prompt,
+            netuid,
         )
 
     @networking.ensure_connected
@@ -2273,6 +2275,7 @@ class Subtensor:
         amount: "Balance",
         wait_for_inclusion: bool = True,
         wait_for_finalization: bool = False,
+        netuid: int = 0,
     ) -> bool:
         """Sends an unstake extrinsic to the chain.
 
@@ -2293,7 +2296,11 @@ class Subtensor:
             call = self.substrate.compose_call(
                 call_module="SubtensorModule",
                 call_function="remove_stake",
-                call_params={"hotkey": hotkey_ss58, "amount_unstaked": amount.rao},
+                call_params={
+                    "hotkey": hotkey_ss58,
+                    "amount_unstaked": amount.rao,
+                    "netuid": netuid,
+                },
             )
             extrinsic = self.substrate.create_signed_extrinsic(
                 call=call, keypair=wallet.coldkey
@@ -3374,7 +3381,9 @@ class Subtensor:
         """
         call_definition = bittensor.__type_registry__["runtime_api"][runtime_api][  # type: ignore
             "methods"  # type: ignore
-        ][method]  # type: ignore
+        ][
+            method
+        ]  # type: ignore
 
         json_result = self.state_call(
             method=f"{runtime_api}_{method}",
