@@ -4,7 +4,7 @@ ansible_vault~=2.1
 backoff
 certifi~=2024.7.4
 colorama~=0.4.6
-cryptography~=42.0.5
+cryptography~=43.0.1
 ddt~=1.6.0
 eth-utils<2.3.0
 fuzzywuzzy>=0.18.0
